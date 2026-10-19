@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Members Only</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <h1>Members Only Club</h1>
+      <p class="tagline">Anyone can read. Members see who wrote it.</p>
+
+      <nav class="nav" aria-label="Account">
+        <% if (user) { %>
+          <p class="greeting">
+            Welcome, <strong><%= user.username %></strong>
+            <% if (user.is_member) { %><span class="badge">Member</span><% } %>
+            <% if (user.is_admin) { %><span class="badge badge--admin">Admin</span><% } %>
+          </p>
+
+          <a class="btn btn--light" href="/new-message">New message</a>
+
+          <% if (!user.is_member) { %>
+            <a class="btn btn--ghost" href="/join-club">Join the club</a>
+          <% } %>
+          <% if (!user.is_admin) { %>
+            <a class="btn btn--ghost" href="/admin-page">Become an admin</a>
+          <% } %>
+
+          <form action="/log-out" method="POST">
+            <button class="btn--ghost" type="submit">Log out</button>
+          </form>
+        <% } else { %>
+          <a class="btn btn--light" href="/log-in">Log in</a>
+          <a class="btn btn--ghost" href="/sign-up">Sign up</a>
+        <% } %>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section-head">
+      <h2>Messages</h2>
+    </div>
+
+    <% if (messages.length === 0) { %>
+      <div class="empty">
+        <p>No messages have been posted yet.</p>
+        <% if (user) { %>
+          <a class="btn" href="/new-message">Write the first message</a>
+        <% } else { %>
+          <a class="btn" href="/sign-up">Sign up to post</a>
+        <% } %>
+      </div>
+    <% } %>
+
+    <% messages.forEach(message => { %>
+      <article class="message">
+        <h3><%= message.title %></h3>
+        <p class="message__body"><%= message.text %></p>
+
+        <% if (user && user.is_member) { %>
+          <p class="message__meta">
+            Posted by <strong><%= message.username %></strong>
+            on <%= new Date(message.created_at).toLocaleString() %>
+          </p>
+        <% } else { %>
+          <p class="message__meta message__meta--locked">
+            Join the club to see who wrote this.
+          </p>
+        <% } %>
+
+        <% if (user && user.is_admin) { %>
+          <div class="message__actions">
+            <form action="/messages/<%= message.id %>/delete" method="POST">
+              <button class="btn--danger" type="submit">Delete message</button>
+            </form>
+          </div>
+        <% } %>
+      </article>
+    <% }) %>
+  </main>
+</body>
+</html>

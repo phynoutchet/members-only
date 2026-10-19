@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Become an Admin | Members Only</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="panel">
+      <h1>Become an admin</h1>
+      <p class="lead">Admins can delete messages. Enter the admin passcode to continue.</p>
+
+      <% if (error) { %>
+        <p class="alert alert--error" role="alert"><%= error %></p>
+      <% } %>
+
+      <form class="stack" action="/admin-page" method="POST">
+        <label for="passcode">Admin passcode</label>
+        <input type="password" id="passcode" name="passcode" autocomplete="off" required>
+
+        <button type="submit">Become an admin</button>
+      </form>
+
+      <p class="footer-link"><a href="/">Back to home</a></p>
+    </section>
+  </main>
+</body>
+</html>

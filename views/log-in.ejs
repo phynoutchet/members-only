@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in | Members Only</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="panel">
+      <h1>Log in</h1>
+
+      <% if (typeof registered !== 'undefined' && registered) { %>
+        <p class="alert alert--ok">Account created. Log in to continue.</p>
+      <% } %>
+      <% if (error) { %>
+        <p class="alert alert--error" role="alert"><%= error %></p>
+      <% } %>
+
+      <form class="stack" action="/log-in" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" autocomplete="username" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" autocomplete="current-password" required>
+
+        <button type="submit">Log in</button>
+      </form>
+
+      <p class="footer-link">Don't have an account? <a href="/sign-up">Sign up</a></p>
+    </section>
+  </main>
+</body>
+</html>

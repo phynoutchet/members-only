@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Message | Members Only</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="panel panel--wide">
+      <h1>New message</h1>
+
+      <% if (error) { %>
+        <p class="alert alert--error" role="alert"><%= error %></p>
+      <% } %>
+
+      <form class="stack" action="/new-message" method="POST">
+        <label for="title">Title</label>
+        <input id="title" name="title" maxlength="150" required>
+
+        <label for="text">Message</label>
+        <textarea id="text" name="text" rows="8" maxlength="10000" required></textarea>
+
+        <button type="submit">Publish message</button>
+      </form>
+
+      <p class="footer-link"><a href="/">Back to home</a></p>
+    </section>
+  </main>
+</body>
+</html>
